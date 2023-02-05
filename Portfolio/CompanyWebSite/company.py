@@ -7,7 +7,7 @@ sit amet vulputate risus auctor gravida. Maecenas ornare eu purus at dapibus. Se
 vitae auctor ante egestas ac. Nullam ornare pulvinar augue in eleifend. Proin scelerisque metus non massa pharetra tristique. 
 Maecenas vitae consectetur nibh. Mauris ut quam commodo, elementum purus a, interdum urna. Lorem ipsum dolor sit amet, 
 '''
-col1, col2 = st.columns([0.5, 1.5])
+col1, col2 = st.columns(2)
 st.subheader("The Best Company")
 st.write(about)
 st.header('Our Team')
