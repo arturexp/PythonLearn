@@ -18,7 +18,7 @@ for index, row in df.iterrows():
     #  size - высота cell
     #  align - текст слева
     pdf.cell(w=0, h=12, txt=row["Topic"], align="L", ln=1, border=0)
-    
+
     #  координаты начала и конца лини ив unit
     #  x1, y1, x2, y2
     pdf.line(10, 21, 200, 21)
@@ -29,7 +29,7 @@ for index, row in df.iterrows():
     pdf.set_text_color(180, 180, 180)
     pdf.cell(w=0, h=10, txt=row["Topic"], align="R")
 
-    for i in range(row['Pages'] -1):
+    for i in range(row['Pages'] - 1):
         pdf.add_page()
         pdf.ln(277)
         #  set the footer
