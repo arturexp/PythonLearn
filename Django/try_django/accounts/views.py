@@ -13,7 +13,7 @@ def login_view(request):
             return redirect('/')
     else:
         form = AuthenticationForm(request)
-    context = {'form': frotm}
+    context = {'form': form}
     return render(request, "accounts/login.html", context)
 
 
