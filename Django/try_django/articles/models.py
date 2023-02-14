@@ -3,7 +3,26 @@ from django.utils import timezone
 from django.db.models.signals import pre_save, post_save
 from .utils import slugify_instance_title
 from django.urls import reverse
+from django.db.models import Q
 # Create your models here.
+
+
+class ArticleQuerySet(models.QuerySet):
+
+    def search(self, query=None):
+        if query is None or query == '':
+            return self.none()
+        lookups = Q(title__icontains=query) | Q(content__icontains=query)
+        return self.filter(lookups)
+
+
+class ArticleManager(models.Manager):
+
+    def get_queryset(self):
+        return ArticleQuerySet(self.model, using=self._db)
+
+    def search(self, query=None):
+        return self.get_queryset().search(query=query)
 
 
 class Article(models.Model):
@@ -17,6 +36,8 @@ class Article(models.Model):
                                default=timezone.now,
                                null=True,
                                blank=True)
+
+    objects = ArticleManager()
 
     def get_absolute_url(self):
         # return f'/articles/{self.slug}/'

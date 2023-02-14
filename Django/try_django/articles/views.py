@@ -7,19 +7,11 @@ from django.http import Http404
 
 # Create your views here.
 def article_search_view(request):
+    query = request.GET.get('q')
 
-    query_dict = request.GET
-    try:
-        query = int(query_dict.get("q"))
-    except:
-        query = None
-
-    article_obj = None
-    if query is not None:
-        article_obj = Article.objects.get(id=query)
-
+    qs = Article.objects.search(query=query)
     context = {
-        "object": article_obj,
+        "object_list": qs,
     }
     return render(request, "articles/search.html", context=context)
 
