@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from articles.models import Article
 from django.contrib.auth.decorators import login_required
 from .forms import ArticleForm
@@ -32,6 +32,7 @@ def article_create_view(request):
     if form.is_valid():
         article_object = form.save()
         context['form'] = ArticleForm()
+        return redirect(article_object.get_absolute_url())
         # context['object'] = article_object
         # context['created'] = True
     return render(request, "articles/create.html", context=context)

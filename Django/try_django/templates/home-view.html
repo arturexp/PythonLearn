@@ -2,13 +2,15 @@
 
 {% block content %}
 
+<a href='{% url "article-create" %}'>Create Article</a>
+
 <h1>{{ title }} ({{ id }})!</h1>
 <p>{{ content }}!</p>
 
 <ul>
     {% for x in object_list %}
     {% if x.title %}
-    <li><a href='/articles/{{ x.slug }}/'>
+    <li><a href='{{ x.get_absolute_url }}'>
             {{ x.title }} - {{ x.content }}</a>
     </li>
     {% endif %}
