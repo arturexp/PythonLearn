@@ -1,9 +1,31 @@
-from rest_framework import generics
+from rest_framework import generics, mixins
 from .models import Product
 from .serializers import ProductSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+
+
+class ProductMixinView(
+        mixins.ListModelMixin,
+        generics.GenericAPIView,
+        mixins.RetrieveModelMixin
+):
+
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = 'pk'
+
+    def get(self, request, *args, **kwargs):
+        pk = kwargs.get('pk')
+        if pk is not None:
+            return self.retrieve(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)
+
+    # def post()
+
+
+product_mixin_view = ProductMixinView.as_view()
 
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
@@ -56,12 +78,12 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
     # lookup_field = 'pk'
 
 
-class ProductListAPIView(generics.ListAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-
-
-product_list_view = ProductListAPIView.as_view()
+# class ProductListAPIView(generics.ListAPIView):
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
+#
+#
+# product_list_view = ProductListAPIView.as_view()
 
 
 # @api_view('GET', 'POST')
