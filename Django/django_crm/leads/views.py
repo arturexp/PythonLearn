@@ -47,6 +47,12 @@ def lead_create(request):
     }
     return render(request, 'leads/lead_create.html', context)
 
+
+def lead_delete(request, pk):
+    lead = Lead.objects.get(id=pk)
+    lead.delete()
+    return redirect('/leads')
+
 # def lead_create(request):
 #     form = LeadModelForm()
 #     if request.method == 'POST':
